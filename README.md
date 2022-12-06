@@ -103,11 +103,20 @@ tabela:
 
 Quando é dada ordem de movimento, todas as unidades selecionadas tentam mover-se
 para o _tile_ de destino da forma mais direta possível de acordo com o tipo de
-movimento indicado na tabela anterior.
+movimento indicado na tabela anterior. As unidades podem mover-se em todos os
+_tiles_, incluindo _water_.
 
-- Se uma unidade, ao decidir o seu próximo passo, for de encontro a outra, então
-  a sua ação de movimento termina naquele momento.
-- As unidades podem mover-se em todos os _tiles_, incluindo _water_.
+Se uma unidade, ao decidir o seu próximo passo, for de encontro a outra, a sua
+ação de movimento termina naquele momento, uma vez que não é possível ter mais
+do que uma unidade por _tile_ (e porque as unidades não possuem movimento
+inteligente, i.e., só sabem mover-se da forma mais direta possível dado o seu
+tipo de movimento). Isto significa que, se um grupo de unidades for ordenado
+para mover-se até determinado _tile_, no máximo apenas uma chega lá. As outras
+ficam o mais perto que conseguirem do _tile_ destino dado o seu tipo de
+movimento e obstáculos encontrados no caminho.
+
+O jogo avança um turno por cada passo que uma unidade ou grupo de unidades dá.
+Por exemplo, se for dada ordem para um grupo.
 
 ### Colheita e geração de recursos
 
