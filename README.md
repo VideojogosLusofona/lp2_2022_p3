@@ -39,37 +39,95 @@ seguintes diferenças:
   [Projeto 1].
 * Devem ser removidos os botões "For the future", bem como o código e
   funcionalidades associadas.
+* O jogo deve ter 4 tipos de unidades, que podem mover-se pelo mapa e colher e
+  criar recursos, tal como indicado na tabela em baixo.
+* Só pode existir uma unidade por _tile_ em cada momento.
+* As unidades devem ser graficamente menores do que um _tile_, de modo a que
+  seja possível clicar num _tile_ para obter a respetiva informação, mesmo que
+  esteja lá uma unidade.
+* Se o utilizador clicar numa unidade, essa unidade fica **selecionada**.
+* Deve ser possível selecionar múltiplas unidades, selecionado uma área
+  retangular do mundo de jogo com o rato (click+drag), **ou**, clicando numa
+  unidade ao mesmo tempo que se pressiona a tecla CTRL (a unidade clicada é adicionada à seleção atual), **ou**, de ambas as formas.
+  * Para cancelar a seleção atual, basta o utilizador selecionar outra
+    unidade ou grupo de unidades, **ou**, clicar com o botão direito do rato em
+    cima do mundo de jogo (seja em _tiles_ ou unidades).
+  * A(s) unidade(s) selecionada(s) aceitam dois tipos de ordem:
+    1. [Movimento](#movimento).
+    2. [Colheita de recursos](#colheita-e-geração-de-recursos).
+* Os turnos avançam de duas formas:
+  1. O jogo avança um ou mais turnos quando é dada ordem de
+     [movimento](#movimento).
+  2. O jogo avança um turno quando é dada ordem de
+     [colheita de recursos](#colheita-e-geração-de-recursos).
 * Deve existir um painel lateral no UI, contendo:
-  * Um contador com a indicação do turno atual (os turnos avançam com o
-    movimento das unidades, descrito mais em baixo).
-  * Um sub-painel para mostrar informação sobre a unidade ou unidades
-    selecionadas (deve estar vazio senão existirem unidades selecionadas). Este
-    sub-painel deve ter um botão "Remove" para remover a(s) unidade(s)
-    atualmente selecionadas do mundo de jogo.
-  * Quatro botões em linha, cada um para adicionar uma das quatro unidades
-    aleatoriamente no mapa (inicialmente não devem existir unidades no mapa).
-* O jogo deve ter 4 tipos de unidades móveis, que podem mover-se pelo mapa e
-  colher recursos, tal como indicado na tabela em baixo seguinte.
-  * Quando uma unidade colhe um recurso, esse recurso desaparece do mapa e é
-    colocado na unidade.
-  * Se o utilizador clicar numa unidade (que deve ser graficamente menor que um
-    _tile_, de modo a que ainda seja possível clicar num _tile_ para obter a
-    respetiva informação, mesmo que esteja lá uma unidade), essa unidade fica
-    **selecionada**.
-  * Quando uma unidade está selecionada: ui, move, eat
-* Turnos advance
-* Multiple select
+  1. Um contador com a indicação do turno atual (os turnos avançam com o
+     movimento das unidades, descrito mais em baixo).
+  2. Um sub-painel que mostra os recursos existentes nos mundo de jogo (i.e.,
+     para cada recurso possível, mostra a respetiva quantidade existente no mundo
+     de jogo).
+  3. Um sub-painel para mostrar informação sobre a unidade ou unidades
+     selecionadas, em particular:
+     - O painel deve estar vazio senão existir(em) unidade(s) selecionada(s).
+     - Se estiver selecionada apenas uma unidade, deve ser mostrado o seu nome,
+       bem como a lista de recursos (tipo e quantidade) que a unidade já colheu.
+     - Se estiverem selecionadas duas ou mais unidades, devem ser mostrados a
+       quantidade de unidades selecionadas, bem como a lista de recursos (tipo e
+       quantidade) de todos os recursos capturados colhidos pelas unidades
+       selecionadas.
+     - No fundo deste sub-painel devem existir três botões:
+       1. _Move_ - Após este botão ser pressionado, o ponteiro do rato muda,
+          indicando que o utilizador pode selecionar um _tile_ de destino,
+          clicando no mesmo (a ação de movimento pode ser cancelada clicando o
+          botão direito do rato). Após seleção do _tile_ de destino, a(s)
+          unidade(s) selecionada(s) move(m)-se de acordo com o descrito na secção
+          [Movimento](#movimento).
+       2. _Harvest_ - A(s) unidade(s) atualmente selecionada(s) realizam a
+         colheita dos respetivos recursos (podendo também gerar recursos), de
+         acordo com a secção [Colheita e geração de recursos](#colheita-e-geração-de-recursos).
+      3. _Remove_ - Remove a(s) unidade(s) selecionada(s) do mundo de jogo.
+  * Quatro botões em linha, para adicionar cada uma das quatro unidades no mapa,
+    numa posição aleatória (inicialmente não devem existir unidades no mapa).
 
 Devem ser implementadas quatro tipo de unidades, de acordo com a seguinte
 tabela:
 
-| Unidade     | Tipo de movimento       | Tipo de recursos que pode colher         |
-|-------------|-------------------------|------------------------------------------|
-| Harvester   | [Von Neumann]: ← ↑ → ↓  | Plants                                   |
-| Miner       | [Moore]:← ↖ ↑ ↗ → ↘ ↓ ↙ | Metals (gera Pollution ao colher Metals) |
-| Grim Reaper | [Moore]:← ↖ ↑ ↗ → ↘ ↓ ↙ | Plants, Animals                          |
-| Butcher     | [Von Neumann]: ← ↑ → ↓  | Animals                                  |
+| Unidade     | Tipo de movimento        | Tipo de recursos que pode colher         |
+|-------------|--------------------------|------------------------------------------|
+| _Harvester_   | [Von Neumann]: ← ↑ → ↓   | Plants                                   |
+| _Miner_       | [Moore]: ← ↖ ↑ ↗ → ↘ ↓ ↙ | _Metals_ (gera _Pollution_ ao colher _Metals_) |
+| _Grim Reaper_ | [Moore]: ← ↖ ↑ ↗ → ↘ ↓ ↙ | _Plants_, _Animals_                          |
+| _Butcher_     | [Von Neumann]: ← ↑ → ↓   | _Animals_                                  |
 
+### Movimento
+
+Quando é dada ordem de movimento, todas as unidades selecionadas tentam mover-se
+para o _tile_ de destino da forma mais direta possível de acordo com o tipo de
+movimento indicado na tabela anterior.
+
+- Se uma unidade, ao decidir o seu próximo passo, for de encontro a outra, então
+  a sua ação de movimento termina naquele momento.
+- As unidades podem mover-se em todos os _tiles_, incluindo _water_.
+
+### Colheita e geração de recursos
+
+Quando é dada ordem de colheita de recursos, todas as unidades selecionadas
+colhem recursos compatíveis, se os mesmos existirem no _tile_ a respetiva
+unidade se encontra. Quando uma unidade colhe um recurso compatível, o mesmo
+desaparece do _tile_ e é guardado na unidade. É de realçar que, ao contrário dos _tiles_, as unidades podem ter mais do que um recurso do mesmo tipo (por
+exemplo, um _Harvester_ pode ter 3 plants, embora um _tile_ só possa ter um
+recurso de cada tipo).
+
+Se não existirem recursos compatíveis, i.e., recursos que a unidade possa
+colher, então a unidade não faz nada.
+
+Também é possível algumas unidades gerarem recursos. Em particular, a unidade
+_Miner_, ao colher _Metals_ (e apenas ao colher _Metals_) gera _Pollution_ no
+_tile_ onde se encontra. Caso o _tile_ já tenha _Pollution_, nada se altera, o
+_tile_ simplesmente continua com _Pollution_.
+
+Quando é dada ordem de colheita de recursos, é gasto um turno, mesmo que nenhuma
+das unidades consiga colher recursos ou que várias o consigam fazer.
 
 ## Dicas e sugestões
 
