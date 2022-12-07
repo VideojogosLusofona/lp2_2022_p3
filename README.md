@@ -339,12 +339,14 @@ Estruturas de Dados][aed] do [Instituto Superior Técnico][ist]*
 ## Licenças
 
 * Este enunciado é disponibilizado através da licença [CC BY-NC-SA 4.0].
+* O código que acompanha este enunciado é disponibilizado através da licença
+  [MIT].
 
 ## Metadados
 
 * Autor: [Nuno Fachada]
 * Curso:  [Licenciatura em Videojogos][lamv]
-* Instituição: [Universidade Lusófona de Humanidades e Tecnologias][ULHT]
+* Instituição: [Universidade Lusófona][ULHT]
 
 [CC BY-NC-SA 4.0]:https://creativecommons.org/licenses/by-nc-sa/4.0/
 [MIT]:http://opensource.org/licenses/MIT
