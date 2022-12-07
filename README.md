@@ -32,62 +32,67 @@ projetos não funcionais nesta data não serão avaliados.
 
 ## Funcionamento da aplicação
 
-A jogo base deve funcionar como indicado no enunciado do [Projeto 1], com as
+O jogo base deve funcionar como indicado no enunciado do [Projeto 1], com as
 seguintes diferenças:
 
 * O código deve ser melhorado/corrigido tendo em conta o _feedback_ dado ao
   [Projeto 1].
 * Devem ser removidos os botões "For the future", bem como o código e
   funcionalidades associadas.
-* O jogo deve ter 4 tipos de unidades, que podem mover-se pelo mapa e colher e
-  criar recursos, tal como indicado na tabela em baixo.
+* O jogo deve ter 4 tipos de unidades, que podem mover-se pelo mapa e colher (e
+  possivelmente gerar) recursos, tal como indicado na tabela em baixo.
 * Só pode existir uma unidade por _tile_ em cada momento.
 * As unidades devem ser graficamente menores do que um _tile_, de modo a que
   seja possível clicar num _tile_ para obter a respetiva informação, mesmo que
   esteja lá uma unidade.
-* Se o utilizador clicar numa unidade, essa unidade fica **selecionada**.
-* Deve ser possível selecionar múltiplas unidades, selecionado uma área
-  retangular do mundo de jogo com o rato (click+drag), **ou**, clicando numa
-  unidade ao mesmo tempo que se pressiona a tecla CTRL (a unidade clicada é adicionada à seleção atual), **ou**, de ambas as formas.
+* Se o utilizador clicar numa unidade, essa unidade fica **selecionada**. Deve
+  ser possível selecionar múltiplas unidades, desenhando uma área retangular no
+  mundo de jogo com o rato (_click_ + _drag_), **ou**, clicando numa unidade ao
+  mesmo tempo que se pressiona a tecla CTRL (a unidade clicada é adicionada à
+  seleção atual), **ou**, de ambas as formas.
   * Para cancelar a seleção atual, basta o utilizador selecionar outra
     unidade ou grupo de unidades, **ou**, clicar com o botão direito do rato em
     cima do mundo de jogo (seja em _tiles_ ou unidades).
   * A(s) unidade(s) selecionada(s) aceitam dois tipos de ordem:
     1. [Movimento](#movimento).
-    2. [Colheita de recursos](#colheita-e-geração-de-recursos).
+    2. [Colheita (e possivelmente geração) de recursos](#colheita-e-geração-de-recursos).
 * Os turnos avançam de duas formas:
   1. O jogo avança um ou mais turnos quando é dada ordem de
      [movimento](#movimento).
   2. O jogo avança um turno quando é dada ordem de
      [colheita de recursos](#colheita-e-geração-de-recursos).
 * Deve existir um painel lateral no UI, contendo:
-  1. Um contador com a indicação do turno atual (os turnos avançam com o
-     movimento das unidades, descrito mais em baixo).
-  2. Um sub-painel que mostra os recursos existentes nos mundo de jogo (i.e.,
+  1. Um contador com a indicação do turno atual.
+  2. Um sub-painel que mostra os recursos existentes no mundo de jogo (i.e.,
      para cada recurso possível, mostra a respetiva quantidade existente no mundo
      de jogo).
-  3. Um sub-painel para mostrar informação sobre a unidade ou unidades
-     selecionadas, em particular:
+  3. Um sub-painel que mostra informação sobre a unidade ou unidades
+     selecionadas. Mais especificamente:
      - O painel deve estar vazio senão existir(em) unidade(s) selecionada(s).
-     - Se estiver selecionada apenas uma unidade, deve ser mostrado o seu nome,
+     - Se estiver selecionada apenas uma unidade, deve ser mostrado o seu tipo,
        bem como a lista de recursos (tipo e quantidade) que a unidade já colheu.
      - Se estiverem selecionadas duas ou mais unidades, devem ser mostrados a
-       quantidade de unidades selecionadas, bem como a lista de recursos (tipo e
-       quantidade) de todos os recursos capturados colhidos pelas unidades
-       selecionadas.
-     - No fundo deste sub-painel devem existir três botões:
+       quantidade de unidades selecionadas (e.g., "Units selected: 3"), bem como
+       a lista de recursos (tipo e quantidade) de todos os recursos colhidos
+       pelas unidades selecionadas.
+     - No final deste sub-painel (em baixo) devem existir três botões, que só
+       devem estar ativos se existir pelo menos uma unidade selecionada:
        1. _Move_ - Após este botão ser pressionado, o ponteiro do rato muda,
-          indicando que o utilizador pode selecionar um _tile_ de destino,
-          clicando no mesmo (a ação de movimento pode ser cancelada clicando o
-          botão direito do rato). Após seleção do _tile_ de destino, a(s)
-          unidade(s) selecionada(s) move(m)-se de acordo com o descrito na secção
-          [Movimento](#movimento).
+          indicando que o utilizador pode selecionar um _tile_ de destino para
+          a(s) unidade(s) selecionada(s). O destino pode ser então selecionado
+          clicando no respetivo _tile_, **ou**, a ação de movimento pode ser
+          cancelada clicando no botão direito do rato. Em qualquer dos casos, o
+          ponteiro do rato volta ao normal. Após seleção do _tile_ de destino,
+          a(s) unidade(s) selecionada(s) move(m)-se de acordo com o descrito na
+          secção [Movimento](#movimento).
        2. _Harvest_ - A(s) unidade(s) atualmente selecionada(s) realizam a
          colheita dos respetivos recursos (podendo também gerar recursos), de
          acordo com a secção [Colheita e geração de recursos](#colheita-e-geração-de-recursos).
-      3. _Remove_ - Remove a(s) unidade(s) selecionada(s) do mundo de jogo.
-  * Quatro botões em linha, para adicionar cada uma das quatro unidades no mapa,
-    numa posição aleatória (inicialmente não devem existir unidades no mapa).
+       3. _Remove_ - Remove a(s) unidade(s) selecionada(s) do mundo de jogo,
+          bem como os recursos que as mesmas entretanto colheram.
+  4. Quatro botões em linha, para adicionar cada uma das quatro unidades ao
+     mundo de jogo numa posição aleatória (inicialmente não devem existir
+     unidades no mundo de jogo).
 
 Devem ser implementadas quatro tipo de unidades, de acordo com a seguinte
 tabela:
@@ -115,28 +120,80 @@ para mover-se até determinado _tile_, no máximo apenas uma chega lá. As outra
 ficam o mais perto que conseguirem do _tile_ destino dado o seu tipo de
 movimento e obstáculos encontrados no caminho.
 
-O jogo avança um turno por cada passo que uma unidade ou grupo de unidades dá.
-Por exemplo, se for dada ordem para um grupo.
+O jogo avança um turno por cada passo que uma unidade ou grupo de unidades dá. O
+seguinte código dá uma ideia geral do que se pretende (atenção que este código
+é meramente exemplificativo do que se pretende e pode não ser diretamente
+funcional no vosso projeto):
+
+```csharp
+private void Move(ISet<Unit> selectedUnits, Tile destination)
+{
+    // Blocked units will be removed from the group of selected units
+    ISet<Unit> blockedUnits = new HashSet<Unit>();
+
+    // Make sure the selectedUnits set is not null and contains some units
+    if ((selectedUnits?.Count ?? 0) == 0)
+        throw new InvalidOperationException("selectedUnits must contain some units!");
+
+    // Move units one step at a time, until no more units are able to move
+    while (selectedUnits.Count > 0)
+    {
+        // When the group of units takes a step, the turn advances
+        turn++;
+
+        // Make the selected units take one step towards their destination
+        foreach (Unit unit in selectedUnits)
+        {
+            // Ask the current unit to take one step towards destination
+            // Will return false if unit is blocked and can't take step
+            bool success = unit.MoveOneStepTowards(destination);
+
+            // If unit was unable to take step, add it to the blocked units set
+            if (!success) blockedUnits.Add(unit);
+        }
+
+        // Units which are blocked are removed from the selected units set
+        selectedUnits.ExceptWith(blockedUnits);
+
+        // Let's clear the blocked units set, so that we can use in the next turn
+        blockedUnits.Clear();
+    }
+}
+```
 
 ### Colheita e geração de recursos
 
 Quando é dada ordem de colheita de recursos, todas as unidades selecionadas
-colhem recursos compatíveis, se os mesmos existirem no _tile_ a respetiva
+colhem recursos compatíveis se os mesmos existirem no _tile_ a respetiva
 unidade se encontra. Quando uma unidade colhe um recurso compatível, o mesmo
-desaparece do _tile_ e é guardado na unidade. É de realçar que, ao contrário dos _tiles_, as unidades podem ter mais do que um recurso do mesmo tipo (por
-exemplo, um _Harvester_ pode ter 3 plants, embora um _tile_ só possa ter um
+desaparece do _tile_ e é guardado na unidade. É de realçar que, ao contrário dos
+_tiles_, as unidades podem ter mais do que um recurso do mesmo tipo (por
+exemplo, um _Harvester_ pode ter 3 _plants_, embora um _tile_ só possa ter um
 recurso de cada tipo).
 
 Se não existirem recursos compatíveis, i.e., recursos que a unidade possa
 colher, então a unidade não faz nada.
 
 Também é possível algumas unidades gerarem recursos. Em particular, a unidade
-_Miner_, ao colher _Metals_ (e apenas ao colher _Metals_) gera _Pollution_ no
+_Miner_, ao colher _Metals_ (e apenas ao colher _Metals_), gera _Pollution_ no
 _tile_ onde se encontra. Caso o _tile_ já tenha _Pollution_, nada se altera, o
 _tile_ simplesmente continua com _Pollution_.
 
 Quando é dada ordem de colheita de recursos, é gasto um turno, mesmo que nenhuma
-das unidades consiga colher recursos ou que várias o consigam fazer.
+das unidades consiga colher recursos ou que várias o consigam fazer, de acordo
+com o seguinte código exemplificativo:
+
+```csharp
+private void Harvest(ISet<Unit> selectedUnits)
+{
+    turn++;
+
+    foreach (Unit unit in selectedUnits)
+    {
+        unit.HarvestCurrentTile();
+    }
+}
+```
 
 ## Dicas e sugestões
 
