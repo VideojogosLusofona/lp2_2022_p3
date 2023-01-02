@@ -26,8 +26,8 @@ Até **16 de dezembro** é necessários que os grupos:
 * Convidem o [docente][Nuno Fachada] para ter acesso a este mesmo repositório
   privado.
 
-Os projetos serão automaticamente clonados às **23h00 de 8 de janeiro**, sendo
-a entrega feita desta forma, sem intervenção dos alunos. Repositórios e/ou
+Os projetos serão automaticamente clonados às **23h00 de ~~8~~ 14 de janeiro**,
+sendo a entrega feita desta forma, sem intervenção dos alunos. Repositórios e/ou
 projetos não funcionais nesta data não serão avaliados.
 
 ## Funcionamento da aplicação
@@ -277,9 +277,9 @@ não comparecerem na discussão, a nota final será zero.
 ## Entrega
 
 O projeto é entregue de forma automática através do GitHub. Mais concretamente,
-o repositório do projeto será automaticamente clonado às **23h00 de de 8 de
-janeiro de 2023**. Certifiquem-se de que a aplicação está funcional e que todos
-os requisitos foram cumpridos, caso contrário o projeto não será avaliado.
+o repositório do projeto será automaticamente clonado às **23h00 de de ~~8~~ 14
+de janeiro de 2023**. Certifiquem-se de que a aplicação está funcional e que
+todos os requisitos foram cumpridos, caso contrário o projeto não será avaliado.
 
 O repositório deve ter:
 
